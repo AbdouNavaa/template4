@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% if form.errors %}
+<div class="form-errors">
+            <span>{{ error }}</span>
+</div>
+{% endif %}
+<section class="form-container">
+   <form action="{% url 'account:update_prof' prof.id %}" method="post" enctype="multipart/form-data">
+   {% csrf_token %}
+   <h3>Modifier {{prof}}</h3>
+   {% csrf_token %}
+   {{ form.as_p }}
+   <input type="submit" value="Ajouter" name="submit" class="btn">
+   </form>
+</section>
+
+{% endblock %}

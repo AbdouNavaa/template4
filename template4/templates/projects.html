@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}  
+
+<div class="d-flex gap-20">
+
+<h1 class="p-relative">Projects</h1>    
+<a href="{% url "template4:add_project" %}" style="margin-top: 45px;" 
+class="visit d-flex ml-730 h-50 pt-20 fs-25 c-white w-fit btn "><i class="fas fa-add"></i></a>
+</div>
+
+
+<div class="projects-page d-grid m-20 gap-20">
+    {% for project in projects %}
+    <div class="project bg-white p-20 rad-6 p-relative">
+        <span class="date fs-13 c-grey">{{project.end | date:'d-m-o'}}</span>
+        <h4 class="m-0">{{project}}</h4>
+        <p class="c-grey mt-10 mb-10 fs-14">{{project.description}}</p>
+        <div class="team">
+            {% for dev in project.team.all %}
+            <a href="#"><img src="{{ dev.image.url }}" alt="" /></a>
+            {% endfor %}
+
+        </div>
+        <div class="do d-flex">
+            {% for categ in project.categories.all %}
+            <span class="fs-13 rad-6 bg-eee">{{categ}}</span>
+            {% endfor %}
+        </div>
+        <div class="info between-flex">
+            <div class="prog bg-eee">
+                <span class="bg-green" style="width: {{project.progress}}%"></span>
+            </div>
+            <div class="fs-14 c-grey">
+                <i class="fa-solid fa-dollar-sign"></i>
+                {{project.price}}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock body %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}  
+{% if request.user.is_staff %}
+<h1 class="p-relative">Courses</h1>
+
+{% else %}    
+<div class="d-flex gap-20">
+
+    <h1 class="p-relative">Courses</h1>    
+    <a href="{% url "template4:add_course" dev.id %}" style="margin-top: 45px;" 
+    class="visit d-flex ml-730 h-50 pt-20 fs-25 c-white w-fit btn "><i class="fas fa-add"></i></a>
+    </div>
+    {% endif %}
+
+<div class="courses-page d-grid m-20 gap-20">
+    {% for course in courses  %}
+    <div class="course bg-white rad-6 p-relative">
+        <img class="cover" src="{{course.image.url}}" alt="" />
+        <img class="instructor" src="{{course.teacher.image.url}}" alt="" />
+        <div class="p-20">
+            <h4 class="m-0">{{course}}</h4>
+            <p class="description c-grey mt-15 fs-14">
+                {{course.description}}
+            </p>
+        </div>
+        <div class="info p-15 p-relative between-flex">
+            <span class="title bg-blue c-white btn-shape">Course Info</span>
+            <span class="c-grey">
+                <i class="fa-regular fa-user"></i>
+                {{course.views}}
+            </span>
+            <span class="c-grey">
+                <i class="fa-solid fa-dollar-sign"></i>
+                {{course.price}}
+            </span>
+        </div>
+        
+    </div>
+    {% endfor %}
+</div>
+{% endblock body %}

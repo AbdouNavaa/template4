@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}  
+
+<div class="d-flex gap-20">
+
+    <h1 class="p-relative">Friends</h1>    
+    {% if request.user.is_staff %}
+    {% else %}
+    <a href="{% url "template4:add_freind" dev.id %}" style="margin-top: 45px;" 
+    class="visit d-flex ml-730 h-50 pt-20 fs-25 c-white w-fit btn "><i class="fas fa-add"></i></a>
+    {% endif %}
+    </div>
+<div class="friends-page d-grid m-20 gap-20">
+    {% for freind in freinds %}
+    {% for fre in freind.friends.all %}
+    <div class="friend bg-white rad-6 p-20 p-relative">
+        <div class="contact">
+            <i class="fa-solid fa-phone"></i>
+            <i class="fa-regular fa-envelope"></i>
+        </div>
+        <div class="txt-c">
+            <img class="rad-half mt-10 mb-10  h-95 w-95" src="{{fre.user.developper.image.url}}" alt="" />
+            <h4 class="m-0">{{fre.user}} </h4>
+            <p class="c-grey fs-13 mt-5 mb-0">{{fre.user.developper.job}}</p>
+        </div>
+        <div class="icons fs-14 p-relative">
+            <div class="mb-10">
+            <i class="fa-regular fa-face-smile fa-fw"></i>
+            <span>{{fre.friends.count}} Friend</span>
+            </div>
+            <div class="mb-10">
+            <i class="fa-solid fa-code-commit fa-fw"></i>
+            <span>15 Projects</span>
+            </div>
+            <div>
+            <i class="fa-regular fa-newspaper fa-fw"></i>
+            <span>25 Articles</span>
+            </div>
+            <span class="vip fw-bold c-orange">VIP</span>
+        </div>
+        <div class="info between-flex fs-13">
+            <span class="c-grey">Joined 02/10/2021</span>
+            <div>
+            <a class="bg-blue c-white btn-shape" href="{% url "account:profile" fre.user  %}">Profile</a>
+            <a class="bg-red c-white btn-shape" href="{% url "template4:delete_freind" fre.user.id %}">Remove</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+</div>
+{% endblock body %}

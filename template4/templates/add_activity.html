@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class=" p-20 bg-white rad-10 h-full">
+    {% if form.errors %}
+    <ul class="form-errors">
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endif %}
+<div class="login-boxes">
+
+    <form action="{% url 'template4:add_activity' dev.id %}" class="add-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Add" name="submit" class="btn ml-95 bg-blue">
+    
+    </form>
+</div>
+</div>
+
+
+{% endblock %}

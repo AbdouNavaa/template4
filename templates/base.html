@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{% block title %}Profile{% endblock %}</title>
+{% comment %} <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/"> {% endcomment %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+
+
+{% comment %} <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+
+</head>
+<body>
+    {% include "all.min.css" %}
+    {% include "framework.css" %}
+    {% include "master.css" %}
+
+<div class="page d-flex">
+    <div class="sidebar bg-white p-20 p-relative">
+        <h3 class="p-relative txt-c mt-0">Elzero</h3>
+        <ul >
+            {% if request.user.is_authenticated %}
+            <li class="actives">
+            <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="#">
+                <i class="fa-regular fa-chart-bar fa-fw"></i>
+                <span>Dashboard</span>
+            </a>
+            </li>
+            <li class="actives">
+            <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="#">
+                <i class="fa-solid fa-gear fa-fw"></i>
+                <span>Settings</span>
+            </a>
+            </li>
+            {% if not request.user.is_staff %}
+            <li class="actives">
+            <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{% url "account:profile" request.user.username %}">
+                <i class="fa-regular fa-user fa-fw"></i>
+                <span>Profile</span>
+            </a>
+            </li>
+            {% endif %}
+            <li class="actives">
+            <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{% url "template4:projects" %}">
+                <i class="fa-solid fa-diagram-project fa-fw"></i>
+                <span>Projects</span>
+            </a>
+            </li>
+            <li class="actives">
+            <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{% url "template4:courses" %}">
+                <i class="fa-solid fa-graduation-cap fa-fw"></i>
+                <span>Courses</span>
+            </a>
+            </li>
+            {% if not request.user.is_staff %}
+            <li class="actives">
+            <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{% url "template4:freinds" %}">
+                <i class="fa-regular fa-circle-user fa-fw"></i>
+                <span>Friends</span>
+            </a>
+            </li>
+            {% endif %}
+            <li class="actives">
+            <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{% url "template4:files" %}">
+                <i class="fa-regular fa-file fa-fw"></i>
+                <span>Files</span>
+            </a>
+            </li>
+            <li class="actives">
+            <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="#">
+                <i class="fa-regular fa-credit-card fa-fw"></i>
+                <span>Plans</span>
+            </a>
+            </li>
+            
+            <li class="actives">
+            <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{% url "account:logout" %}">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="content w-full">
+        <!-- Start Head -->
+        <div class="head bg-white p-15 between-flex">
+            <div class="search p-relative">
+                <input class="p-10" type="search" placeholder="Type A Keyword" />
+            </div>
+            {% if request.user.is_authenticated %}
+            <div class="icons d-flex align-center">
+                <span class="notification p-relative">
+                    <i class="fa-regular fa-bell fa-lg"></i>
+                </span>
+                {% if request.user.is_staff %}
+                {% else %}
+                {% comment %} <h1>{{request.user.}}</h1> {% endcomment %}
+                <img src="{{request.user.developper.image.url}}" alt="" />
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        <!-- End Head -->
+
+        {% block body %}
+        {% endblock %}
+    </div>
+
+
+</div>
+
+<script>
+    
+const themeBtn = document.querySelector('.actives');
+
+themeBtn.addEventListener('click', (){
+    themeBtn.querySelector('a:checked').classList.toggle('active');
+})
+
+
+</script>
+</body>
+</html>

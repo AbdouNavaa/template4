@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}  
+
+{% if request.user.is_staff %}
+<h1 class="p-relative">Files</h1>
+{% else %}    
+<div class="d-flex gap-20">
+
+    <h1 class="p-relative">Files</h1>    
+    <a href="{% url "template4:add_file" dev.id %}" style="margin-top: 45px;" 
+    class="visit d-flex ml-730 h-50 pt-20 fs-25 c-white w-fit btn "><i class="fas fa-add"></i></a>
+</div>
+    {% endif %}
+<div class="files-page d-flex m-20 gap-10">
+    <div class="files-stats p-10 bg-white rad-10">
+        <h2 class="mt-0 mb-15 txt-c-mobile">Files Statistics</h2>
+        <div class="d-flex align-center border-eee p-10 rad-6 mb-15 fs-13">
+            <i class="fa-regular fa-file-pdf fa-lg blue center-flex c-blue icon"></i>
+            <div class="info">
+                <span>PDF Files</span>
+                <span class="c-grey d-block mt-5">{{pdfs}}</span>
+            </div>
+            <div class="size c-grey">6.5GB</div>
+        </div>
+        <div class="d-flex align-center border-eee p-10 rad-6 mb-15 fs-13">
+            <i class="fa-regular fa-images fa-lg green center-flex c-green icon"></i>
+            <div class="info">
+                <span>Images</span>
+                <span class="c-grey d-block mt-5">{{png}} Files</span>
+            </div>
+            <div class="size c-grey">3.5GB</div>
+        </div>
+        <div class="d-flex align-center border-eee p-10 rad-6 mb-15 fs-13">
+            <i class="fa-regular fa-file-word fa-lg red center-flex c-red icon"></i>
+            <div class="info">
+                <span>Word Files</span>
+                <span class="c-grey d-block mt-5">{{eps}} Files</span>
+            </div>
+            <div class="size c-grey">3.2GB</div>
+        </div>
+        <div class="d-flex align-center border-eee p-10 rad-6 fs-13">
+            <i class="fa-solid fa-file-csv fa-lg orange center-flex c-orange icon"></i>
+            <div class="info">
+                <span>CSV Files</span>
+                <span class="c-grey d-block mt-5">{{word}} Files</span>
+            </div>
+            <div class="size c-grey">2.9GB</div>
+        </div>
+            <a class="upload bg-blue c-white fs-13 rad-6 d-block w-fit" href="#">
+                <i class="fa-solid fa-angles-up mr-10"></i>
+                Upload
+            </a>
+    </div>
+
+    <div class="files-content d-grid gap-20">
+        {% for file in files  %}
+        <div class="file bg-white p-10 rad-10">
+            <i class="fa-solid fa-download c-grey p-absolute"></i>
+                <div class="icon txt-c">
+                    <img class="mt-15 mb-15" src="{{file.image.url}}" alt="" />
+                </div>
+            <div class="txt-c mb-10 fs-14">{{file}}</div>
+            <p class="c-grey fs-13 txt-cap">{{file.creater}}</p>
+            <div class="info between-flex mt-10 pt-10 fs-13 c-grey">
+                <span>{{file.upload_at |date:"d/m/o"}}</span>
+                <span>{{file.image.size}} KB</span>
+            </div>
+        
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body %}

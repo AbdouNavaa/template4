@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class=" p-20 bg-white rad-10 h-full">
+  <div class="login-boxes">
+  
+    <form action="{% url 'account:login' %}" class="m-form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h3>login now</h3>
+      
+      {% if form.errors %}
+        <p>{{ form.errors }}</p>
+      {% endif %}
+      
+      {% if next %}
+        {% if user.is_authenticated %}
+          <p>Your account doesn't have access to this page. To proceed,
+          please login with an account that has access.</p>
+        {% else %}
+          <p>Please login to see this page.</p>
+        {% endif %}
+      {% endif %}
+      
+      <div class="d-flex align-center mb-15">
+        <i class="fa fa-user center-flex c-grey" aria-hidden="true"></i>
+        <input type="text" name="username" placeholder="username" required maxlength="50" class="w-100" value="{{ form.username.value|default_if_none:'' }}">
+      </div>
+      <p>your password <span>*</span></p>
+      
+      <div class="d-flex align-center mb-15">
+        <i class="fa fa-lock center-flex c-grey" aria-hidden="true"></i>
+        <input type="password" name="password" placeholder="password" required maxlength="20" class="w-100">
+      </div>
+
+      <input type="submit" value="login now" name="submit" class="btn">
+      <input type="hidden" name="next" value="{{ next }}" />
+      <p><a href="{% url 'accounts:password_reset' %}">Lost password?</a></p>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}
